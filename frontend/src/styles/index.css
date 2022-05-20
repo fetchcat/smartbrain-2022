@@ -1,0 +1,127 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+.App {
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(89deg, #ff5edf 0%, #04c8de 100%);
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  padding: 1em;
+  background-color: white;
+  box-shadow: 0 0 10px;
+  min-width: 300px;
+  width: 50%;
+  margin: 2em auto;
+  border-radius: 5px;
+}
+
+.btn {
+  border: none;
+  padding: 0.5em 1em;
+  font-family: "Roboto", sans-serif;
+  border-radius: 5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.primary {
+  background-color: #ff5edf;
+  color: #190e4f;
+}
+
+.primary:hover {
+  background-color: #b80093;
+}
+
+.cta {
+  background-color: #190e4f;
+  color: white;
+}
+
+.cta:hover {
+  background-color: #311c9c;
+}
+
+.particles {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.m1 {
+  margin: 1em;
+}
+
+.m2 {
+  margin: 2em;
+}
+
+.m3 {
+  margin: 3em;
+}
+
+.nav {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 1em;
+}
+
+.image-link-input {
+  padding: 0px 5px;
+  height: 32px;
+  background-color: white;
+  border: none;
+
+  margin-right: 0.5em;
+  border-radius: 5px;
+}
+
+.logo {
+  border-radius: 10px;
+  background: linear-gradient(89deg, #04c8de 0%, #ff5edf 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.medium-text {
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+.big-text {
+  font-weight: bold;
+  font-size: 2.5em;
+}
+
+.white {
+  color: white;
+}
+
+.api-image {
+  max-width: 300px;
+}
+
+.form {
+  background-color: #04c8de;
+  padding: 1.5em;
+  border-radius: 10px;
+}
