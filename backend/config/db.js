@@ -1,19 +1,13 @@
 require("dotenv").config();
 
-const knex = require("knex");
+const Pool = require("pg").Pool;
 
-knex({
-  client: "pg",
-  version: "7.2",
-  connection: {
-    host: process.env.HOST,
-    port: process.env.PORT,
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-    database: process.env.DB,
-  },
+const pool = new Pool({
+  user: "smartbrain",
+  host: "34.83.120.144",
+  database: "smartbrain",
+  password: "pp&kiYLG45sEcZ",
+  port: 5432,
 });
 
-const db = knex(connectDB);
-
-module.exports = db;
+module.exports = pool;
