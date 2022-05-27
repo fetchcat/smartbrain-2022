@@ -23,42 +23,24 @@ const getUsers = async (req, res) => {
 
 // POST - New User
 
-// const postNewUser = async (req, res) => {
-//   const { email, name, password } = req.body;
-//   const joined = new Date();
-//   try {
-//     bcrypt.hash(password, saltRounds, function (error, hash) {
-//       if (error) {
-//         throw new Error();
-//       }
-//       const res = await pool.query(
-//         "INSERT INTO users (email, name, joined) VALUES ($1, $2, $3)",
-//         [email, name, joined],
-//         (error, result) => {
-//           if (error) {
-//             throw error;
-//           }
-//           res.status(201).json({ message: "User created successfully!" });
-//           console.log(result);
-//         }
-//       );
-//     });
-//   } catch (error) {
-//     res.status(400).json({ message: "Error creating new user" });
-//     console.error(error.message);
-//   }
-// };
-
 const postNewUser = async (req, res) => {
   const { email, name, password } = req.body;
   const joined = new Date();
   try {
-    const user = await pool.query(
-      "INSERT INTO users (email, name, joined) VALUES ($1, $2, $3)",
-      [email, name, joined]
-    );
-    res.status(201).json({ message: `User ${email} created successfully!` });
-    return user;
+    bcrypt.hash(password, saltRounds, async function (error, hash) {
+      if (error) {
+        console.error(error);
+      }
+      const user = await pool.query(
+        "INSERT INTO users (email, name, joined, password) VALUES ($1, $2, $3, $4) RETURNING email",
+        [email, name, joined, hash]
+      );
+      const newUser = user.rows[0].email;
+
+      res
+        .status(201)
+        .json({ message: `User ${newUser} created successfully!` });
+    });
   } catch (error) {
     res.status(400).json({ message: "Error creating new user" });
     console.error(error.message);
@@ -67,8 +49,14 @@ const postNewUser = async (req, res) => {
 
 // POST - Login User
 
-const postUserLogin = async (req, res) => {
+const postLoginUser = async (req, res) => {
   try {
+    const { email, password } = req.body;
+    const user = await pool.query(
+      "SELECT * IN users (email, name, joined, password) VALUES ($1, $2, $3, $4)",
+      [email, name, joined, hash]
+    );
+    // const match = await bcrypt.compare(password, )
   } catch (error) {
     res.status(400).json({ message: "Error signing in" });
     console.error(error.message);
@@ -82,4 +70,5 @@ const postUserLogin = async (req, res) => {
 module.exports = {
   getUsers,
   postNewUser,
+  postLoginUser,
 };

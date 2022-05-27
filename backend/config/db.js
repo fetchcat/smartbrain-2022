@@ -3,10 +3,10 @@ require("dotenv").config();
 const Pool = require("pg").Pool;
 
 const pool = new Pool({
-  user: "smartbrain",
-  host: "34.83.120.144",
-  database: "smartbrain",
-  password: "pp&kiYLG45sEcZ",
+  user: process.env.USER,
+  host: process.env.HOST,
+  database: process.env.DB,
+  password: process.env.PASS,
   port: 5432,
 });
 
