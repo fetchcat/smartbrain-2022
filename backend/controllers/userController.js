@@ -7,15 +7,10 @@ const saltRounds = 10;
 
 const getUsers = async (req, res) => {
   try {
-    await pool.query(
-      "SELECT * FROM users ORDER BY id ASC",
-      (error, results) => {
-        if (error) {
-          throw error;
-        }
-        res.status(200).json(results.rows);
-      }
+    const users = await pool.query(
+      "SELECT id, name, email, entries, joined FROM users ORDER BY id ASC"
     );
+    res.json(users.rows);
   } catch {
     res.status(400).json({ message: "Cannot fetch users from database" });
   }
@@ -52,23 +47,63 @@ const postNewUser = async (req, res) => {
 const postLoginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await pool.query(
-      "SELECT * IN users (email, name, joined, password) VALUES ($1, $2, $3, $4)",
-      [email, name, joined, hash]
-    );
-    // const match = await bcrypt.compare(password, )
+    const user = await pool.query("SELECT * FROM users WHERE email = $1", [
+      email,
+    ]);
+    const match = await bcrypt.compare(password, user.rows[0].password);
+
+    if (match) {
+      res
+        .status(200)
+        .json({ user: { email: user.rows[0].email, name: user.rows[0].name } });
+    } else {
+      res.status(400).json({ message: "Invalid login" });
+    }
   } catch (error) {
     res.status(400).json({ message: "Error signing in" });
     console.error(error.message);
   }
 };
 
-// PUT - Modify User
+// PUT - Modify User by ID
 
-// DELETE - Remove User
+const putIncreaseEntriesUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const entry = await pool.query(
+      "UPDATE users SET entries = entries + 1 WHERE id = $1",
+      [id]
+    );
+    if (entry.rowCount === 1) {
+      res.json({ message: "Entry incremented successfully" });
+    } else {
+      res.json({ message: "No user found" });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// DELETE - Remove User by ID
+
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await pool.query("DELETE FROM users WHERE id = $1", [id]);
+    if (user.rowCount === 1) {
+      res.json({ message: "User deleted successfully" });
+    } else {
+      res.json({ message: "No user found" });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 module.exports = {
   getUsers,
   postNewUser,
   postLoginUser,
+  putIncreaseEntriesUser,
+  deleteUser,
 };
