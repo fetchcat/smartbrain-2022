@@ -1,5 +1,5 @@
 import Tilt from "react-tilt";
-import brain from "../assets/brain.png";
+import brain from "../../assets/brain.png";
 
 const Logo = () => {
   return (

@@ -1,3 +1,5 @@
+import Button from "react-bootstrap/Button";
+
 const ImageLinkForm = ({ onInputChange, onButtonSubmit }) => {
   return (
     <div className="center column ">
@@ -16,9 +18,9 @@ const ImageLinkForm = ({ onInputChange, onButtonSubmit }) => {
             }}
             placeholder="Copy URL here...."
           />
-          <button className="btn cta" onClick={onButtonSubmit}>
+          <Button className="btn btn-primary" onClick={onButtonSubmit}>
             Detect
-          </button>
+          </Button>
         </div>
       </div>
     </div>
