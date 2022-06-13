@@ -5,8 +5,16 @@ const Navigation = () => {
         <a href="#" className="navbar-brand">
           SmartBrain 2022
         </a>
-        <div className="collapse navbar-collapse">
-          <ul className="navbar-nav">
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navmenu"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navmenu">
+          <ul className="navbar-nav ms-auto">
             <li className="nav-item">
               <a href="#" className="nav-link">
                 Sign In

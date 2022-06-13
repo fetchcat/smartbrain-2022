@@ -7,7 +7,9 @@ import FaceRecognition from "./components/Face/Face";
 import Rank from "./components/Rank/Rank";
 import Signin from "./components/Signin/Signin";
 
-import NewParticles from "./components/Particles/NewParticles";
+import Showcase from "./components/Showcase/Showcase";
+import Detect from "./components/Detect/Detect";
+import User from "./components/User/User";
 
 const App = () => {
   const [input, onInputChange] = useState("");
@@ -42,18 +44,9 @@ const App = () => {
   return (
     <div className="App">
       <Navigation />
-
-      <div className="center column card">
-        <Logo />
-        <Rank />
-        <div className="m1">
-          <ImageLinkForm
-            onInputChange={onInputChange}
-            onButtonSubmit={onButtonSubmit}
-          />
-        </div>
-        <FaceRecognition imageUrl={imageUrl} box={box} />
-      </div>
+      <Showcase />
+      <Detect />
+      <User />
     </div>
   );
 };
