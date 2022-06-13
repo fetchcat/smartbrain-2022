@@ -1,4 +1,28 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+@media (min-width: 768px) {
+  .news-input {
+    width: 50%;
+  }
+}
+
+canvas {
+  display: flex;
+  vertical-align: bottom;
+}
+#tsparticles {
+  width: 200;
+  height: 200;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+}
+
+.particles {
+  display: flex;
+
+}
+
+/* @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 
 .App {
   font-family: "Roboto", sans-serif;
@@ -133,4 +157,4 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   cursor: pointer;
-}
+} */

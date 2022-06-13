@@ -9,16 +9,17 @@
 
 ### Frontend
 
-[] Convert React Classes to Hooks
+[x] Convert React Classes to Hooks
 [x] Replace Particles
 [] Updated Clarifai API
 [] Context API?
 [x] Use custom CSS instead of tachyons
-[] Tilt Error
+[x] Tilt Error
 
 ### Backend
 
 [x] Install Local PostgreSQL
+[] Replace PostgreSQL with MySQL
 
 CREATE TABLE users (
 id serial PRIMARY KEY,
