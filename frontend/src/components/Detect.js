@@ -6,16 +6,16 @@ const Detect = () => {
       <div className="container">
         <div className="d-md-flex justify-content-between align-items-center">
           <h3 className="mb-3 mb-md-0">Ready to detect face...</h3>
-          <div class="input-group news-input">
+          <div className="input-group news-input">
             <input
               type="text"
-              class="form-control"
+              className="form-control"
               placeholder="Image URL..."
               aria-label="Image URL"
               aria-describedby="basic-addon2"
             />
-            <div class="input-group-append">
-              <button class="btn bg-dark btn-lg text-light" type="button">
+            <div className="input-group-append">
+              <button className="btn bg-dark btn-lg text-light" type="button">
                 Button
               </button>
             </div>

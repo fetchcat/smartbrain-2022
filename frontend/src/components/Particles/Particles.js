@@ -1,13 +1,15 @@
-import Particles from "react-tsparticles";
+import TSParticles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 
-const NewParticles = () => {
+const Particles = () => {
   const particlesInit = async (main) => {
     console.log(main);
     await loadFull(main);
   };
 
-  const particlesLoaded = (container) => {};
+  const particlesLoaded = (container) => {
+    console.log(container)
+  };
 
   const options = {
     fpsLimit: 120,
@@ -35,10 +37,10 @@ const NewParticles = () => {
     },
     particles: {
       color: {
-        value: "#ffffff",
+        value: "#cccccc",
       },
       links: {
-        color: "#ffffff",
+        color: "#cccccc",
         distance: 150,
         enable: true,
         opacity: 0.2,
@@ -77,7 +79,7 @@ const NewParticles = () => {
     detectRetina: true,
   };
   return (
-    <Particles
+    <TSParticles
       className="particles"
       id="tsparticles"
       init={particlesInit}
@@ -87,4 +89,4 @@ const NewParticles = () => {
   );
 };
 
-export default NewParticles;
+export default Particles;

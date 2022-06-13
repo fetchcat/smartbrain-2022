@@ -1,15 +1,10 @@
 import { useState } from "react";
 
-import Navigation from "./components/Nav/Nav";
-import Logo from "./components/Logo/Logo";
-import ImageLinkForm from "./components/LinkForm/LinkForm";
-import FaceRecognition from "./components/Face/Face";
-import Rank from "./components/Rank/Rank";
-import Signin from "./components/Signin/Signin";
+import Navigation from "./components/Nav";
 
-import Showcase from "./components/Showcase/Showcase";
-import Detect from "./components/Detect/Detect";
-import User from "./components/User/User";
+import Showcase from "./components/Showcase";
+import Detect from "./components/Detect";
+import User from "./components/User";
 
 const App = () => {
   const [input, onInputChange] = useState("");
@@ -46,7 +41,7 @@ const App = () => {
       <Navigation />
       <Showcase />
       <Detect />
-      <User />
+      <User box={box} />
     </div>
   );
 };
