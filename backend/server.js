@@ -1,51 +1,35 @@
-require("dotenv").config();
-
-// --- ENV VAR --- //
-
-const port = process.env.PORT || 5000;
-
-// --- MySQL DB --- //
-
-const mysql = require("mysql2");
-
-const connection = mysql.createConnection({
-  host: process.env.HOST,
-  user: process.env.DBUSER,
-  password: process.env.PASSWORD,
-  database: process.env.DATABASE,
-});
-
-// --- Express --- //
+const PORT = process.env.PORT || 5000;
 
 const express = require("express");
+const cors = require("cors");
+
 const app = express();
-const router = express.Router();
 
-app.listen(port, () => {
-  console.log(`> SmartBrain Backend listening on port: ${port}...`);
-});
+const userRoutes = require("./routes/userRoutes");
 
-// --- Middleware --- //
+// Middleware
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  cors({
+    // Domain Whitelist
+    origin: process.env.ORIGIN,
+  })
+);
 
-// --- Default Route --- //
+// Listen
+
+app.listen(PORT, () => {
+  console.log(`> SmartBrain API is listening on port ${PORT}...`);
+});
+
+// Root Route
 
 app.get("/", (req, res) => {
-  res.status(200).send("SmartBrain Backend").end();
+  res.json({ message: "SmartBrain API" });
 });
 
-// Test
+// User Routes
 
-app.get("/test", async (req, res) => {
-  const sqlQuery = "SELECT * FROM users";
-  const response = await connection.query(
-    sqlQuery,
-    function (err, results, fields) {
-      console.log(results);
-      console.log(fields);
-    }
-  );
-  res.status(200).json(response);
-});
+app.use("/api/users", userRoutes);
