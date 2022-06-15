@@ -6,6 +6,7 @@ const cors = require("cors");
 const app = express();
 
 const userRoutes = require("./routes/userRoutes");
+const visionRoutes = require("./routes/visionRoutes");
 
 // Middleware
 
@@ -33,3 +34,5 @@ app.get("/", (req, res) => {
 // User Routes
 
 app.use("/api/users", userRoutes);
+
+app.use("/api/face", visionRoutes);
