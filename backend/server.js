@@ -19,12 +19,6 @@ app.use(
   })
 );
 
-// Listen
-
-app.listen(PORT, () => {
-  console.log(`> SmartBrain API is listening on port ${PORT}...`);
-});
-
 // Root Route
 
 app.get("/", (req, res) => {
@@ -34,5 +28,10 @@ app.get("/", (req, res) => {
 // User Routes
 
 app.use("/api/users", userRoutes);
-
 app.use("/api/face", visionRoutes);
+
+// Listen
+
+app.listen(PORT, () => {
+  console.log(`> SmartBrain API is listening on port ${PORT}...`);
+});
