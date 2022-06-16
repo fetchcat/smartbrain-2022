@@ -5,8 +5,8 @@ const cors = require("cors");
 
 const app = express();
 
-const userRoutes = require("./routes/userRoutes");
-const visionRoutes = require("./routes/visionRoutes");
+const userRoutes = require("./routes/user");
+const visionRoutes = require("./routes/vision");
 
 // Middleware
 

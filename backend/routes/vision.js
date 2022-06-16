@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { postFaceDetect } = require("../controllers/visionController");
+const { postFaceDetect } = require("../controllers/vision");
 
 // Get Face Data
 
