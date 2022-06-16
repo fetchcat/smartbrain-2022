@@ -7,7 +7,7 @@ const {
   postLoginUser,
   putIncreaseEntriesUser,
   deleteUser,
-} = require("../controllers/userController");
+} = require("../controllers/user");
 
 // GET - All Users
 

@@ -1,3 +1,5 @@
+CREATE DATABASE smartbrain;
+
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   name VARCHAR(100),
