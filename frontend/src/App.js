@@ -6,6 +6,8 @@ import Showcase from "./components/Showcase";
 import Detect from "./components/Detect";
 import User from "./components/User";
 
+import { UserProvider } from "./context/User";
+
 const App = () => {
   const [input, onInputChange] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -38,10 +40,12 @@ const App = () => {
 
   return (
     <div className="App">
-      <Navigation />
-      <Showcase />
-      <Detect />
-      <User box={box} />
+      <UserProvider>
+        <Navigation />
+        <Showcase />
+        <Detect />
+        <User box={box} />
+      </UserProvider>
     </div>
   );
 };

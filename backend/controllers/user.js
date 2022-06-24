@@ -19,7 +19,7 @@ const getUsers = async (req, res) => {
 // POST - New User
 
 const postNewUser = async (req, res) => {
-  const { email, name, password } = req.body;
+  const { email, firstname, lastname, password } = req.body;
   const joined = new Date();
   try {
     bcrypt.hash(password, saltRounds, async function (error, hash) {
@@ -27,8 +27,8 @@ const postNewUser = async (req, res) => {
         console.error(error);
       }
       const user = await pool.query(
-        "INSERT INTO users (email, name, joined, password) VALUES ($1, $2, $3, $4) RETURNING email",
-        [email, name, joined, hash]
+        "INSERT INTO users (email, firstname, lastname, joined, password) VALUES ($1, $2, $3, $4, $5) RETURNING email",
+        [email, firstname, lastname, joined, hash]
       );
       const newUser = user.rows[0].email;
 
@@ -47,17 +47,29 @@ const postNewUser = async (req, res) => {
 const postLoginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log(req.body);
     const user = await pool.query("SELECT * FROM users WHERE email = $1", [
       email,
     ]);
-    const match = await bcrypt.compare(password, user.rows[0].password);
 
-    if (match) {
-      res
-        .status(200)
-        .json({ user: { email: user.rows[0].email, name: user.rows[0].name } });
+    // Make sure user exists before checking PW
+
+    if (user.rows.length > 0) {
+      const match = await bcrypt.compare(password, user.rows[0].password);
+      if (match) {
+        console.log(user.rows[0]);
+        res.status(200).json({
+          user: {
+            email: user.rows[0].email,
+            name: user.rows[0].name,
+            entries: user.rows[0].entries,
+          },
+        });
+      } else {
+        res.status(400).json({ message: "Invalid password" });
+      }
     } else {
-      res.status(400).json({ message: "Invalid login" });
+      res.status(400).json({ message: "No User found" });
     }
   } catch (error) {
     res.status(400).json({ message: "Error signing in" });

@@ -3,7 +3,7 @@ import React from "react";
 import Tilt from "react-parallax-tilt";
 import brain from "../assets/brain.png";
 
-import Particles from "./Particles/Particles";
+import Particles from "./Particles";
 
 const Showcase = () => {
   return (

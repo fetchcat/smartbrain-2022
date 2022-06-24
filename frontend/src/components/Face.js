@@ -11,7 +11,12 @@ const FaceRecognition = ({ imageUrl, box }) => {
   if (imageUrl) {
     face = (
       <div className="center">
-        <img id="inputImage" src={imageUrl} className="api-image m1" />
+        <img
+          id="inputImage"
+          src={imageUrl}
+          className="api-image m1"
+          alt="face"
+        />
         <div className="bounding-box" style={boundingBox}></div>
       </div>
     );

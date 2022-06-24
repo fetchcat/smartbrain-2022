@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import UserContext from "../context/User";
 
-import FaceRecognition from "./Face/Face";
+import FaceRecognition from "./Face";
 
 const User = ({ box }) => {
+  const { user } = useContext(UserContext);
   return (
     <section className="bg-secondary pt-3">
       <div className="container">
@@ -14,13 +16,17 @@ const User = ({ box }) => {
               </h4>
               <div className="card-body">
                 <ul className="list-group">
-                  <li className="list-group-item fw-bold">Hello, Nerd</li>
-                  <li className="list-group-item list-group-item-light">
-                    Email: nerd@gmail.com
+                  <li className="list-group-item fw-bold">
+                    Hello, {user.firstName}
                   </li>
-                  <li className="list-group-item ">Detections: 15</li>
+                  <li className="list-group-item list-group-item-light">
+                    Email: {user.email}
+                  </li>
+                  <li className="list-group-item ">
+                    Detections: {user.detections}
+                  </li>
                   <li className="list-group-item list-group-item-primary">
-                    Current Rank: 5
+                    Current Rank: {user.rank}
                   </li>
                 </ul>
               </div>

@@ -19,7 +19,7 @@ router.route("/:id").delete(deleteUser);
 
 // POST - New User
 
-router.route("/new").post(postNewUser);
+router.route("/register").post(postNewUser);
 
 // POST - Login User
 
