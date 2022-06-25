@@ -57,12 +57,27 @@ const postLoginUser = async (req, res) => {
     if (user.rows.length > 0) {
       const match = await bcrypt.compare(password, user.rows[0].password);
       if (match) {
-        console.log(user.rows[0]);
+        // Generate JWT
+        const today = new Date();
+        const expirationDate = new Date(today);
+        expirationDate.setDate(today.getDate() + 60);
+
+        const token = await jwt.sign(
+          {
+            email: email,
+            id: user.rows[0].id,
+            exp: parseInt(expirationDate.getTime() / 1000, 10),
+          },
+          process.env.JWT_SECRET
+        );
+
+        // Return User with Token
         res.status(200).json({
           user: {
             email: user.rows[0].email,
             name: user.rows[0].name,
             entries: user.rows[0].entries,
+            token: token,
           },
         });
       } else {
@@ -76,6 +91,8 @@ const postLoginUser = async (req, res) => {
     console.error(error.message);
   }
 };
+
+const postLoginPassport = async (req, res) => {};
 
 // PUT - Modify User by ID
 
@@ -118,4 +135,5 @@ module.exports = {
   postLoginUser,
   putIncreaseEntriesUser,
   deleteUser,
+  postLoginPassport,
 };
