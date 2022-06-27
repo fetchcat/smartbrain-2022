@@ -3,6 +3,25 @@ const pool = require("../config/db");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
+const passport = require("passport");
+
+// Passport - Local Strategy
+
+const initializePassport = require("../config/passport");
+initializePassport(
+  passport,
+  async function getUserByEmail(email) {
+    const user = await pool.query("SELECT * FROM users WHERE email = $1", [
+      email,
+    ]);
+    return user;
+  },
+  async function getUserById(id) {
+    const user = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
+    return user;
+  }
+);
+
 // GET - ALL USERS
 
 const getUsers = async (req, res) => {
@@ -44,37 +63,78 @@ const postNewUser = async (req, res) => {
 
 // POST - Login User
 
-const postLoginUser = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    console.log(req.body);
-    const user = await pool.query("SELECT * FROM users WHERE email = $1", [
-      email,
+// const postLoginUser = async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+//     console.log(req.body);
+//     const user = await pool.query("SELECT * FROM users WHERE email = $1", [
+//       email,
+//     ]);
+
+//     // Make sure user exists before checking PW
+
+//     if (user.rows.length > 0) {
+//       const match = await bcrypt.compare(password, user.rows[0].password);
+//       if (match) {
+//         // Generate JWT
+//         const today = new Date();
+//         const expirationDate = new Date(today);
+//         expirationDate.setDate(today.getDate() + 60);
+
+//         const token = await jwt.sign(
+//           {
+//             email: email,
+//             id: user.rows[0].id,
+//             exp: parseInt(expirationDate.getTime() / 1000, 10),
+//           },
+//           process.env.JWT_SECRET
+//         );
+
+//         // Return User with Token
+//         res.status(200).json({
+//           user: {
+//             email: user.rows[0].email,
+//             name: user.rows[0].name,
+//             entries: user.rows[0].entries,
+//             token: token,
+//           },
+//         });
+//       } else {
+//         res.status(400).json({ message: "Invalid password" });
+//       }
+//     } else {
+//       res.status(400).json({ message: "No User found" });
+//     }
+//   } catch (error) {
+//     res.status(400).json({ message: "Error signing in" });
+//     console.error(error.message);
+//   }
+// };
+
+const getLoginSuccess = async (req, res) => {
+  if (req.session.passport.user) {
+    const user = await pool.query("SELECT * FROM users WHERE id = $1", [
+      req.session.passport.user,
     ]);
 
-    // Make sure user exists before checking PW
-
-    if (user.rows.length > 0) {
-      const match = await bcrypt.compare(password, user.rows[0].password);
-      if (match) {
-        console.log(user.rows[0]);
-        res.status(200).json({
-          user: {
-            email: user.rows[0].email,
-            name: user.rows[0].name,
-            entries: user.rows[0].entries,
-          },
-        });
-      } else {
-        res.status(400).json({ message: "Invalid password" });
-      }
-    } else {
-      res.status(400).json({ message: "No User found" });
-    }
-  } catch (error) {
-    res.status(400).json({ message: "Error signing in" });
-    console.error(error.message);
+    res.status(200).json({
+      message: "Authenticated",
+      user: {
+        id: user.rows[0].id,
+        firstname: user.rows[0].firstname,
+        lastname: user.rows[0].lastname,
+        email: user.rows[0].email,
+        entries: user.rows[0].entries,
+        joined: user.rows[0].joined,
+      },
+    });
+  } else {
+    res.status(401).json({ message: "Unauthorized Request" });
   }
+};
+
+const getLoginFail = async (req, res) => {
+  res.status(401).json({ message: "Unauthorized Request" });
 };
 
 // PUT - Modify User by ID
@@ -115,7 +175,9 @@ const deleteUser = async (req, res) => {
 module.exports = {
   getUsers,
   postNewUser,
-  postLoginUser,
+  // postLoginUser,
   putIncreaseEntriesUser,
   deleteUser,
+  getLoginSuccess,
+  getLoginFail,
 };
