@@ -4,6 +4,11 @@
   }
 }
 
+.App {
+  height: 100vh;
+  overflow: hidden;
+}
+
 canvas {
   display: flex;
   vertical-align: bottom;
@@ -19,7 +24,6 @@ canvas {
 
 .particles {
   display: flex;
-
 }
 
 /* @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");

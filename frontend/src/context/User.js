@@ -3,13 +3,7 @@ import { createContext, useState } from "react";
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
-  const [user, setUser] = useState({
-    firstName: "Mario",
-    lastName: "Plumber",
-    email: "mario@gmail.com",
-    detections: 3,
-    rank: 1,
-  });
+  const [user, setUser] = useState({ isAuth: false });
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import User from "./User";
+import Profile from "./Profile";
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
