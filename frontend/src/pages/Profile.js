@@ -1,14 +1,40 @@
 import React, { useContext, useEffect } from "react";
 import UserContext from "../context/User";
 
-import FaceRecognition from "./Face";
+import Nav from "../components/Nav";
 
-const Profile = ({ box }) => {
-  const { user, setUser } = useContext(UserContext);
+// import FaceRecognition from "./Face";
 
+const Profile = () => {
+  const { user } = useContext(UserContext);
   return (
-    user.isAuth && (
-      <section className="d-flex bg-secondary pt-3 h-100 justify-content-center">
+    <>
+      <Nav />
+      <section className="bg-dark text-light p-5">
+        <div className="container">
+          <div className="d-md-flex justify-content-between align-items-center">
+            <h3 className="mb-3 mb-md-0">Ready to detect face...</h3>
+            <div className="input-group news-input">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Image URL..."
+                aria-label="Image URL"
+                aria-describedby="basic-addon2"
+              />
+              <div className="input-group-append">
+                <button
+                  className="btn bg-primary btn-lg text-light"
+                  type="button"
+                >
+                  Detect!
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="d-flex bg-secondary py-5 h-100 justify-content-center">
         <div className="container">
           <div className="row">
             <div className="col-md-6 pb-3">
@@ -37,17 +63,17 @@ const Profile = ({ box }) => {
             <div className="col-md-6 pb-3">
               <div className="card border-0 text-center">
                 <h4 className="card-header">
-                  <i className="bi bi-person-circle"></i> Image
+                  <i className="bi bi-card-image"></i> Image
                 </h4>
                 <div className="card-body">
-                  <FaceRecognition box={box} />
+                  {/* <FaceRecognition box={box} /> */}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-    )
+    </>
   );
 };
 

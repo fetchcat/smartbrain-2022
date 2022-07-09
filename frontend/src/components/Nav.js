@@ -5,22 +5,20 @@ import SignIn from "./SignIn";
 
 import UserContext from "../context/User";
 
-const Navigation = () => {
+const Nav = () => {
   const { user, setUser } = useContext(UserContext);
 
   const logout = async () => {
-    const response = await fetch("/api/users/logout", {
-      method: "GET",
-    });
+    console.log("logged out!");
   };
 
   return (
-    <nav className="navbar navbar-expand-md bg-dark navbar-dark">
+    <nav className="navbar navbar-expand-md bg-primary navbar-dark ">
       <Register />
       <SignIn />
       <div className="container">
         <a href="/" className="navbar-brand">
-          SmartBrain 2022
+          <i className="bi bi-person-bounding-box me-2"></i>SmartBrain 2022
         </a>
         <button
           className="navbar-toggler"
@@ -65,4 +63,4 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default Nav;

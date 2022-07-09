@@ -1,10 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import UserContext from "../context/User";
 
+import { useNavigate } from "react-router-dom";
+
 const SignIn = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userPass, setUserPass] = useState("");
   const [error, setError] = useState("");
+
+  let navigate = useNavigate();
 
   const { user, setUser } = useContext(UserContext);
 
@@ -34,7 +38,7 @@ const SignIn = () => {
         entries: serverData.user.entries,
         isAuth: true,
       });
-      console.log(user);
+      navigate("/profile", { replace: true });
     } catch (error) {
       console.error(error);
     }

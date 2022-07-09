@@ -1,40 +1,17 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import Tilt from "react-parallax-tilt";
 import brain from "../assets/brain.png";
-import UserContext from "../context/User";
 
-import Particles from "./Particles";
+import Nav from "../components/Nav";
 
-const Landing = () => {
-  const checkAuthStatus = async () => {
-    setUser({ isAuth: false });
-    const response = await fetch("/api/users/success", {
-      method: "GET",
-    });
-    const data = await response.json();
-    console.log(data);
-    // if (response.isAuth === false) {
-    //   setUser({ isAuth: false });
-    //   return;
-    // }
-    // if (response.status === 200) {
-    //   const data = await response.json();
-    //   console.log(data);
+import Particles from "../components/Particles";
 
-    //   setUser({
-    //     firstName: data.user.firstname,
-    //     lastName: data.user.lastname,
-    //     id: data.user.id,
-    //     email: data.user.email,
-    //     entries: data.user.entries,
-    //     isAuth: true,
-    //   });
-    // }
-  };
-  const { user, setUser } = useContext(UserContext);
+const Home = () => {
   return (
-    !user.isAuth && (
+    <>
+      {" "}
+      <Nav />
       <section className="d-flex bg-dark text-light text-center text-sm-start p-5 h-100 align-items-center justify-content-center">
         <Particles />
         <div className="container">
@@ -61,8 +38,8 @@ const Landing = () => {
           </div>
         </div>
       </section>
-    )
+    </>
   );
 };
 
-export default Landing;
+export default Home;

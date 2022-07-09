@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Profile from "./Profile";
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
