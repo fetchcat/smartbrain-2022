@@ -3,24 +3,26 @@ const pool = require("../config/db");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
-const passport = require("passport");
+const jwt = require("jsonwebtoken");
+
+// const passport = require("passport");
 
 // Passport - Local Strategy
 
-const initializePassport = require("../config/passport");
-initializePassport(
-  passport,
-  async function getUserByEmail(email) {
-    const user = await pool.query("SELECT * FROM users WHERE email = $1", [
-      email,
-    ]);
-    return user;
-  },
-  async function getUserById(id) {
-    const user = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
-    return user;
-  }
-);
+// const initializePassport = require("../config/passport");
+// initializePassport(
+//   passport,
+//   async function getUserByEmail(email) {
+//     const user = await pool.query("SELECT * FROM users WHERE email = $1", [
+//       email,
+//     ]);
+//     return user;
+//   },
+//   async function getUserById(id) {
+//     const user = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
+//     return user;
+//   }
+// );
 
 // GET - ALL USERS
 
@@ -63,53 +65,53 @@ const postNewUser = async (req, res) => {
 
 // POST - Login User
 
-// const postLoginUser = async (req, res) => {
-//   try {
-//     const { email, password } = req.body;
-//     console.log(req.body);
-//     const user = await pool.query("SELECT * FROM users WHERE email = $1", [
-//       email,
-//     ]);
+const postLoginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    console.log(req.body);
+    const user = await pool.query("SELECT * FROM users WHERE email = $1", [
+      email,
+    ]);
 
-//     // Make sure user exists before checking PW
+    // Make sure user exists before checking PW
 
-//     if (user.rows.length > 0) {
-//       const match = await bcrypt.compare(password, user.rows[0].password);
-//       if (match) {
-//         // Generate JWT
-//         const today = new Date();
-//         const expirationDate = new Date(today);
-//         expirationDate.setDate(today.getDate() + 60);
+    if (user.rows.length > 0) {
+      const match = await bcrypt.compare(password, user.rows[0].password);
+      if (match) {
+        // Generate JWT
+        const today = new Date();
+        const expirationDate = new Date(today);
+        expirationDate.setDate(today.getDate() + 60);
 
-//         const token = await jwt.sign(
-//           {
-//             email: email,
-//             id: user.rows[0].id,
-//             exp: parseInt(expirationDate.getTime() / 1000, 10),
-//           },
-//           process.env.JWT_SECRET
-//         );
+        const token = await jwt.sign(
+          {
+            email: email,
+            id: user.rows[0].id,
+            exp: parseInt(expirationDate.getTime() / 1000, 10),
+          },
+          process.env.JWT_SECRET
+        );
 
-//         // Return User with Token
-//         res.status(200).json({
-//           user: {
-//             email: user.rows[0].email,
-//             name: user.rows[0].name,
-//             entries: user.rows[0].entries,
-//             token: token,
-//           },
-//         });
-//       } else {
-//         res.status(400).json({ message: "Invalid password" });
-//       }
-//     } else {
-//       res.status(400).json({ message: "No User found" });
-//     }
-//   } catch (error) {
-//     res.status(400).json({ message: "Error signing in" });
-//     console.error(error.message);
-//   }
-// };
+        // Return User with Token
+        res.status(200).json({
+          user: {
+            email: user.rows[0].email,
+            name: user.rows[0].name,
+            entries: user.rows[0].entries,
+            token: `Bearer ${token}`,
+          },
+        });
+      } else {
+        res.status(400).json({ message: "Invalid password" });
+      }
+    } else {
+      res.status(400).json({ message: "No User found" });
+    }
+  } catch (error) {
+    res.status(400).json({ message: "Error signing in" });
+    console.error(error.message);
+  }
+};
 
 const getLoginSuccess = async (req, res) => {
   if (req.session.passport.user) {
@@ -175,7 +177,7 @@ const deleteUser = async (req, res) => {
 module.exports = {
   getUsers,
   postNewUser,
-  // postLoginUser,
+  postLoginUser,
   putIncreaseEntriesUser,
   deleteUser,
   getLoginSuccess,

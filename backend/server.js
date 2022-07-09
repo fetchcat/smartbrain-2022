@@ -1,4 +1,5 @@
 require("dotenv").config();
+require("./config/passport");
 
 const PORT = process.env.PORT || 5000;
 
@@ -22,18 +23,18 @@ app.use(
     origin: process.env.ORIGIN,
   })
 );
-app.use(flash());
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    cookie: { maxAge: 60000 },
-    resave: false,
-    saveUninitialized: false,
-  })
-);
+// app.use(flash());
+// app.use(
+//   session({
+//     secret: process.env.SESSION_SECRET,
+//     cookie: { maxAge: 60000 },
+//     resave: false,
+//     saveUninitialized: false,
+//   })
+// );
 
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 
 // Routes
 
