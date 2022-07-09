@@ -8,12 +8,11 @@ import UserContext from "../context/User";
 const Navigation = () => {
   const { user, setUser } = useContext(UserContext);
 
-  const logout = () => {
+  const logout = async () => {
     const response = await fetch("/api/users/logout", {
       method: "GET",
-      
-    })
-  }
+    });
+  };
 
   return (
     <nav className="navbar navbar-expand-md bg-dark navbar-dark">
@@ -35,10 +34,7 @@ const Navigation = () => {
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
               {user.isAuth ? (
-                <a
-                  className="nav-link"
-                  onClick={() => logout()}
-                >
+                <a className="nav-link" onClick={() => logout()}>
                   Logout
                 </a>
               ) : (
