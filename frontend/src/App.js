@@ -1,18 +1,17 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import Navigation from "./components/Nav";
 
-import Showcase from "./components/Showcase";
+import Landing from "./components/Landing";
 import Detect from "./components/Detect";
-import User from "./components/User";
+import Profile from "./components/Profile";
 
-import { UserProvider } from "./context/User";
+import UserContext, { UserProvider } from "./context/User";
 
 const App = () => {
   const [input, onInputChange] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [box, setBox] = useState({});
-
   const onButtonSubmit = async () => {
     setImageUrl(input);
     calculateFaceLocation();
@@ -42,9 +41,9 @@ const App = () => {
     <div className="App">
       <UserProvider>
         <Navigation />
-        <Showcase />
+        <Landing />
         <Detect />
-        <User box={box} />
+        <Profile box={box} />
       </UserProvider>
     </div>
   );

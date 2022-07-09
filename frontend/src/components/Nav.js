@@ -1,7 +1,19 @@
+import React, { useContext } from "react";
+
 import Register from "./Register";
 import SignIn from "./SignIn";
 
+import UserContext from "../context/User";
+
 const Navigation = () => {
+  const { user, setUser } = useContext(UserContext);
+
+  const logout = async () => {
+    const response = await fetch("/api/users/logout", {
+      method: "GET",
+    });
+  };
+
   return (
     <nav className="navbar navbar-expand-md bg-dark navbar-dark">
       <Register />
@@ -21,14 +33,20 @@ const Navigation = () => {
         <div className="collapse navbar-collapse" id="navmenu">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <a
-                href="/"
-                className="nav-link"
-                data-bs-toggle="modal"
-                data-bs-target="#signin"
-              >
-                Sign In
-              </a>
+              {user.isAuth ? (
+                <a className="nav-link" onClick={() => logout()}>
+                  Logout
+                </a>
+              ) : (
+                <a
+                  href="/"
+                  className="nav-link"
+                  data-bs-toggle="modal"
+                  data-bs-target="#signin"
+                >
+                  Login
+                </a>
+              )}
             </li>
             <li className="nav-item">
               <a

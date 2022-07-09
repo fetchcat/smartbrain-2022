@@ -18,13 +18,10 @@ function checkNotAuthenticated(req, res, next) {
 
 // Log out user (Passport)
 
-const getLogout = async (req, res, next) => {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.redirect("/");
-  });
+const getLogout = async (req, res) => {
+  req.logout();
+  res.clearCookie("connect.sid");
+  res.status(200).json({ isAuth: false, message: "logout successful" });
 };
 
 module.exports = { checkAuthenticated, checkNotAuthenticated, getLogout };

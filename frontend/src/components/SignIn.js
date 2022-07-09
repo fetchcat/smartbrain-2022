@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import UserContext from "../context/User";
 
 const SignIn = () => {
@@ -21,7 +21,7 @@ const SignIn = () => {
         body: JSON.stringify({ email: userEmail, password: userPass }),
       });
       const serverData = await response.json();
-      if (serverData.message) {
+      if (serverData.error) {
         console.log(serverData.message);
         setError(serverData.message);
         return;
@@ -32,7 +32,9 @@ const SignIn = () => {
         lastName: serverData.user.lastname,
         email: serverData.user.email,
         entries: serverData.user.entries,
+        isAuth: true,
       });
+      console.log(user);
     } catch (error) {
       console.error(error);
     }
@@ -109,6 +111,7 @@ const SignIn = () => {
             <button
               type="submit"
               onClick={submitSignIn}
+              data-bs-dismiss="modal"
               className="btn btn-primary"
             >
               Sign In
