@@ -7,8 +7,6 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const passport = require("passport");
-const flash = require("express-flash");
-const session = require("express-session");
 
 const userRoutes = require("./routes/user");
 const visionRoutes = require("./routes/vision");
@@ -23,18 +21,8 @@ app.use(
     origin: process.env.ORIGIN,
   })
 );
-// app.use(flash());
-// app.use(
-//   session({
-//     secret: process.env.SESSION_SECRET,
-//     cookie: { maxAge: 60000 },
-//     resave: false,
-//     saveUninitialized: false,
-//   })
-// );
 
 app.use(passport.initialize());
-// app.use(passport.session());
 
 // Routes
 
