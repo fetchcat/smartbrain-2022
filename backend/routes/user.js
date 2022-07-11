@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const passport = require("passport");
+
+// Check for Passport Auth, for Protected Routes
+
+const checkPassport = require("../middleware/auth");
 
 const {
   getUsers,
@@ -26,15 +29,11 @@ router.route("/register").post(postNewUser);
 
 router.route("/login").post(postLoginUser);
 
-router.get(
-  "/protected",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    res.status(200).json({
-      message: "Authenticated",
-    });
-  }
-);
+router.get("/protected", checkPassport, (req, res) => {
+  res.status(200).json({
+    message: "Authenticated",
+  });
+});
 
 // PUT - Update entries for user by ID
 

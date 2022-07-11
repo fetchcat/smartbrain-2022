@@ -5,4 +5,4 @@ const checkPassport = (req, res, next) => {
   next();
 };
 
-export default checkPassport;
+module.exports = checkPassport;
