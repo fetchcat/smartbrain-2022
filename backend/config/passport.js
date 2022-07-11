@@ -1,20 +1,20 @@
 const passport = require("passport");
 const pool = require("./db");
 
-const JwtStrategy = require("passport-jwt").Strategy,
-  ExtractJwt = require("passport-jwt").ExtractJwt;
-var opts = {};
-opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = process.env.JWT_SECRET;
+const { JwtStrategy, ExtractJwt } = require("passport-jwt");
+
+var options = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.JWT_SECRET,
+};
 
 passport.use(
-  new JwtStrategy(opts, async function (jwt_payload, done) {
-    console.log(jwt_payload);
+  new JwtStrategy(options, async function (jwt_payload, done) {
     const user = await pool.query("SELECT * FROM users WHERE email = $1", [
       jwt_payload.email,
     ]);
     if (!user) {
-      return done(user.rows[0], false);
+      return done(user, false);
     }
 
     if (user.rows.length > 0) {
