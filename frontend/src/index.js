@@ -11,7 +11,9 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 import "./styles/index.css";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const app = document.getElementById("root");
+
+const root = ReactDOM.createRoot(app);
 root.render(
   <React.StrictMode>
     <App />
